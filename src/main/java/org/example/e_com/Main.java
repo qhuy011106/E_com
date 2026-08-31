@@ -1,116 +1,281 @@
 package org.example.e_com;
 
-import org.example.e_com.business.Impl.ReviewBusinessImpl;
-import org.example.e_com.business.ReviewBusiness;
-import org.example.e_com.model.Review;
+import org.example.e_com.business.CheckoutBusiness;
+import org.example.e_com.business.Impl.CheckoutBusinessImpl;
+import org.example.e_com.model.Order;
+
+import java.util.Scanner;
 
 public class Main {
 
+    private static final Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-        ReviewBusiness reviewBusiness =
-                new ReviewBusinessImpl();
+        CheckoutBusiness checkoutBusiness =
+                new CheckoutBusinessImpl();
 
-        System.out.println("================================");
-        System.out.println("      REVIEW BUSINESS TEST");
-        System.out.println("================================");
+        while (true) {
 
-        // ==============================
-        // 1. GET ALL REVIEW
-        // ==============================
-        System.out.println("\n===== GET ALL REVIEW =====");
+            System.out.println();
+            System.out.println("================================");
+            System.out.println("       E-COM TEST SYSTEM");
+            System.out.println("================================");
+            System.out.println("1. Test Auth");
+            System.out.println("2. Test User");
+            System.out.println("3. Test Category");
+            System.out.println("4. Test Product");
+            System.out.println("5. Test Cart");
+            System.out.println("6. Test CartItem");
+            System.out.println("7. Test Order");
+            System.out.println("8. Test OrderItem");
+            System.out.println("9. Test Payment");
+            System.out.println("10. Test Review");
+            System.out.println("11. Test Checkout");
+            System.out.println("0. Thoat");
+            System.out.print("Chon: ");
 
-        for (Review review : reviewBusiness.getAllReview()) {
-            System.out.println(review);
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    testAuth();
+                    break;
+
+                case 2:
+                    testUser();
+                    break;
+
+                case 3:
+                    testCategory();
+                    break;
+
+                case 4:
+                    testProduct();
+                    break;
+
+                case 5:
+                    testCart();
+                    break;
+
+                case 6:
+                    testCartItem();
+                    break;
+
+                case 7:
+                    testOrder();
+                    break;
+
+                case 8:
+                    testOrderItem();
+                    break;
+
+                case 9:
+                    testPayment();
+                    break;
+
+                case 10:
+                    testReview();
+                    break;
+
+                case 11:
+                    testCheckout(checkoutBusiness);
+                    break;
+
+                case 0:
+                    System.out.println("Thoat chuong trinh!");
+                    return;
+
+                default:
+                    System.out.println("Lua chon khong hop le!");
+            }
         }
+    }
 
-        // ==============================
-        // 2. FIND BY ID
-        // ==============================
-        System.out.println("\n===== FIND REVIEW BY ID =====");
+    // =====================================================
+    // AUTH
+    // =====================================================
 
-        Review review =
-                reviewBusiness.findById(1);
+    private static void testAuth() {
 
-        System.out.println(review);
+        System.out.println();
+        System.out.println("===== AUTH TEST =====");
 
-        // ==============================
-        // 3. FIND BY USER ID
-        // ==============================
-        System.out.println("\n===== FIND REVIEW BY USER ID =====");
+        // Đặt code test Auth cũ của bạn vào đây
 
-        for (Review r : reviewBusiness.findByUserId(2)) {
-            System.out.println(r);
+        System.out.println("Auth test");
+    }
+
+    // =====================================================
+    // USER
+    // =====================================================
+
+    private static void testUser() {
+
+        System.out.println();
+        System.out.println("===== USER TEST =====");
+
+        // Đặt code User test cũ của bạn vào đây
+
+        System.out.println("User test");
+    }
+
+    // =====================================================
+    // CATEGORY
+    // =====================================================
+
+    private static void testCategory() {
+
+        System.out.println();
+        System.out.println("===== CATEGORY TEST =====");
+
+        // Đặt code Category test cũ của bạn vào đây
+
+        System.out.println("Category test");
+    }
+
+    // =====================================================
+    // PRODUCT
+    // =====================================================
+
+    private static void testProduct() {
+
+        System.out.println();
+        System.out.println("===== PRODUCT TEST =====");
+
+        // Đặt code Product test cũ của bạn vào đây
+
+        System.out.println("Product test");
+    }
+
+    // =====================================================
+    // CART
+    // =====================================================
+
+    private static void testCart() {
+
+        System.out.println();
+        System.out.println("===== CART TEST =====");
+
+        // Đặt code Cart test cũ của bạn vào đây
+
+        System.out.println("Cart test");
+    }
+
+    // =====================================================
+    // CART ITEM
+    // =====================================================
+
+    private static void testCartItem() {
+
+        System.out.println();
+        System.out.println("===== CART ITEM TEST =====");
+
+        // Đặt code CartItem test cũ của bạn vào đây
+
+        System.out.println("CartItem test");
+    }
+
+    // =====================================================
+    // ORDER
+    // =====================================================
+
+    private static void testOrder() {
+
+        System.out.println();
+        System.out.println("===== ORDER TEST =====");
+
+        // Đặt code Order test cũ của bạn vào đây
+
+        System.out.println("Order test");
+    }
+
+    // =====================================================
+    // ORDER ITEM
+    // =====================================================
+
+    private static void testOrderItem() {
+
+        System.out.println();
+        System.out.println("===== ORDER ITEM TEST =====");
+
+        // Đặt code OrderItem test cũ của bạn vào đây
+
+        System.out.println("OrderItem test");
+    }
+
+    // =====================================================
+    // PAYMENT
+    // =====================================================
+
+    private static void testPayment() {
+
+        System.out.println();
+        System.out.println("===== PAYMENT TEST =====");
+
+        // Đặt code Payment test cũ của bạn vào đây
+
+        System.out.println("Payment test");
+    }
+
+    // =====================================================
+    // REVIEW
+    // =====================================================
+
+    private static void testReview() {
+
+        System.out.println();
+        System.out.println("===== REVIEW TEST =====");
+
+        // Đặt code Review test cũ của bạn vào đây
+
+        System.out.println("Review test");
+    }
+
+    // =====================================================
+    // CHECKOUT
+    // =====================================================
+
+    private static void testCheckout(
+            CheckoutBusiness checkoutBusiness) {
+
+        System.out.println();
+        System.out.println("===== CHECKOUT TEST =====");
+
+        System.out.print("Nhap User ID: ");
+        int userId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Nhap phuong thuc thanh toan: ");
+        String paymentMethod = sc.nextLine();
+
+        Order order =
+                checkoutBusiness.checkout(
+                        userId,
+                        paymentMethod
+                );
+
+        if (order == null) {
+
+            System.out.println();
+            System.out.println("Checkout that bai!");
+
+        } else {
+
+            System.out.println();
+            System.out.println("Checkout thanh cong!");
+            System.out.println("--------------------------------");
+            System.out.println("Order ID: "
+                    + order.getId());
+            System.out.println("User ID: "
+                    + order.getUser_id());
+            System.out.println("Total amount: "
+                    + order.getTotal_amount());
+            System.out.println("Status: "
+                    + order.getStatus());
+            System.out.println("--------------------------------");
         }
-
-        // ==============================
-        // 4. FIND BY PRODUCT ID
-        // ==============================
-        System.out.println("\n===== FIND REVIEW BY PRODUCT ID =====");
-
-        for (Review r : reviewBusiness.findByProductId(1)) {
-            System.out.println(r);
-        }
-
-        // ==============================
-        // 5. ADD REVIEW
-        // ==============================
-        System.out.println("\n===== ADD REVIEW =====");
-
-        Review newReview = new Review();
-
-        // User 3 chưa review Product 2
-        newReview.setUserId(3);
-        newReview.setProductId(2);
-        newReview.setRating(5);
-        newReview.setComment("Sản phẩm dùng rất tốt");
-
-        boolean add =
-                reviewBusiness.addReview(newReview);
-
-        System.out.println("Thêm review: " + add);
-
-        // ==============================
-        // 6. UPDATE REVIEW
-        // ==============================
-        System.out.println("\n===== UPDATE REVIEW =====");
-
-        Review updateReview =
-                reviewBusiness.findById(1);
-
-        if (updateReview != null) {
-
-            updateReview.setRating(4);
-            updateReview.setComment(
-                    "Sau khi sử dụng thấy khá tốt"
-            );
-
-            boolean update =
-                    reviewBusiness.updateReview(updateReview);
-
-            System.out.println(
-                    "Update review: " + update
-            );
-        }
-
-        // ==============================
-        // 7. DELETE REVIEW
-        // ==============================
-        System.out.println("\n===== DELETE REVIEW =====");
-
-        // Dùng ID không tồn tại để test
-        boolean delete =
-                reviewBusiness.deleteReview(999);
-
-        System.out.println(
-                "Delete review ID 999: " + delete
-        );
-
-        // ==============================
-        // END
-        // ==============================
-        System.out.println("\n================================");
-        System.out.println("          TEST FINISHED");
-        System.out.println("================================");
     }
 }

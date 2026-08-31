@@ -6,6 +6,7 @@ import org.example.e_com.model.Order;
 import org.example.e_com.service.OrderService;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
@@ -75,5 +76,24 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return orderDao.delete(id) > 0;
+    }
+
+    @Override
+    public int createOrder(Order order, Connection conn) {
+
+        if (order == null || conn == null) {
+            return 0;
+        }
+
+        if (order.getUser_id() <= 0
+                || order.getTotal_amount() == null
+                || order.getTotal_amount().compareTo(BigDecimal.ZERO) < 0
+                || order.getStatus() == null
+                || order.getStatus().trim().isEmpty()) {
+
+            return 0;
+        }
+
+        return orderDao.insert(order, conn);
     }
 }

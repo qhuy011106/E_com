@@ -4,6 +4,7 @@ import org.example.e_com.dao.ProductDao;
 import org.example.e_com.model.Product;
 import org.example.e_com.util.DBConnection;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ public class ProductDaoImpl implements ProductDao {
             while(rs.next()){
                 int id =  rs.getInt("id");
                 String name = rs.getString("name");
-                double price = rs.getDouble("price");
+                BigDecimal price = rs.getBigDecimal("price");
                 int quantity = rs.getInt("quantity");
                 int category_id = rs.getInt("category_id");
                 Product a = new Product(id,name,price,quantity,category_id);
@@ -51,7 +52,7 @@ public class ProductDaoImpl implements ProductDao {
                 pro = new Product(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getDouble("price"),
+                        rs.getBigDecimal("price"),
                         rs.getInt("quantity"),
                         rs.getInt("category_id")
                 );
@@ -74,7 +75,7 @@ public class ProductDaoImpl implements ProductDao {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, product.getId());
             ps.setString(2,product.getName());
-            ps.setDouble(3,product.getPrice());
+            ps.setBigDecimal(3,product.getPrice());
             ps.setInt(4,product.getQuantity());
             ps.setInt(5,product.getCategory_id());
             row = ps.executeUpdate();
@@ -95,7 +96,7 @@ public class ProductDaoImpl implements ProductDao {
             String sql = "update products set name = ?, price = ?, quantity = ?, category_id = ? where id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, product.getName());
-            ps.setDouble(2,product.getPrice());
+            ps.setBigDecimal(2,product.getPrice());
             ps.setInt(3, product.getQuantity());
             ps.setInt(4,product.getCategory_id());
             ps.setInt(5, product.getId());
@@ -126,5 +127,32 @@ public class ProductDaoImpl implements ProductDao {
             e.printStackTrace();
         }
         return row;
+    }
+
+    @Override
+    public int update(Product product, Connection conn) {
+
+        String sql = """
+            UPDATE products
+            SET name = ?,
+                price = ?,
+                quantity = ?,
+                category_id = ?
+            WHERE id = ?
+            """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, product.getName());
+            ps.setBigDecimal(2, product.getPrice());
+            ps.setInt(3, product.getQuantity());
+            ps.setInt(4, product.getCategory_id());
+            ps.setInt(5, product.getId());
+
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Loi khi cap nhat Product trong transaction", e);
+        }
     }
 }

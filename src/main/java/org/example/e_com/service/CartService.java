@@ -10,4 +10,5 @@ public interface CartService {
     boolean addCart(Cart cart);
     boolean updateCart(Cart cart);
     boolean deleteCart(int id);
+    Cart findByUserId(int userId);
 }

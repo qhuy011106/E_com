@@ -2,6 +2,7 @@ package org.example.e_com.service;
 
 import org.example.e_com.model.Product;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface ProductService {
@@ -15,4 +16,5 @@ public interface ProductService {
     boolean updateProduct(Product product);
 
     boolean deleteProduct(int id);
+    int updateProduct(Product product, Connection conn);
 }

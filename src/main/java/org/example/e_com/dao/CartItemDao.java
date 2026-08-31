@@ -2,6 +2,7 @@ package org.example.e_com.dao;
 
 import org.example.e_com.model.CartItem;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface CartItemDao {
@@ -11,5 +12,5 @@ public interface CartItemDao {
     int insert(CartItem cartItem);
     int update(CartItem cartItem);
     int delete(int id);
-
+    int deleteByCartId(int cartId, Connection conn);
 }

@@ -5,6 +5,7 @@ import org.example.e_com.dao.impl.PaymentDaoImpl;
 import org.example.e_com.model.Payment;
 import org.example.e_com.service.PaymentService;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -61,5 +62,24 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = paymentdao.findById(id);
         if(payment == null) return false;
         return paymentdao.delete(id) > 0;
+    }
+
+    @Override
+    public int createPayment(Payment payment, Connection conn) {
+
+        if (payment == null || conn == null) {
+            return 0;
+        }
+
+        if (payment.getOrderId() <= 0
+                || payment.getPaymentMethod() == null
+                || payment.getPaymentMethod().trim().isEmpty()
+                || payment.getPaymentStatus() == null
+                || payment.getPaymentStatus().trim().isEmpty()) {
+
+            return 0;
+        }
+
+        return paymentdao.insert(payment, conn);
     }
 }

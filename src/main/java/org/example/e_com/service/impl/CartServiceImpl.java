@@ -36,10 +36,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public Cart findByUserId(int userId) {
+        if (userId <= 0) {
+            return null;
+        }
+
+        return cartdao.findByUserId(userId);
+    }
+    @Override
     public boolean deleteCart(int id) {
         if(id <= 0) return false;
         Cart cart = cartdao.findById(id);
         if(cart == null) return false;
         return cartdao.delete(id) > 0;
     }
+
 }

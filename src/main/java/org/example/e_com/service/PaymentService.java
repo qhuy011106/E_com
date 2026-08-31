@@ -2,6 +2,7 @@ package org.example.e_com.service;
 
 import org.example.e_com.model.Payment;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface PaymentService {
@@ -17,4 +18,7 @@ public interface PaymentService {
     boolean updatePayment(Payment payment);
 
     boolean deletePayment(int id);
+
+    // Tạo payment trong transaction
+    int createPayment(Payment payment, Connection conn);
 }

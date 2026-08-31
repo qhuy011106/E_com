@@ -146,6 +146,42 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public int insert(Order order, Connection conn) {
+
+        String sql = """
+            INSERT INTO orders(user_id, total_amount, status)
+            VALUES (?, ?, ?)
+            """;
+
+        try (PreparedStatement ps = conn.prepareStatement(
+                sql,
+                java.sql.Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, order.getUser_id());
+            ps.setBigDecimal(2, order.getTotal_amount());
+            ps.setString(3, order.getStatus());
+
+            int row = ps.executeUpdate();
+
+            if (row == 0) {
+                return 0;
+            }
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Loi khi tao Order", e);
+        }
+
+        return 0;
+    }
+
+    @Override
     public int update(Order order) {
         int row = 0;
 

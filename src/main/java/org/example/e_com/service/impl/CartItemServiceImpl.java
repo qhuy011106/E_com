@@ -5,6 +5,7 @@ import org.example.e_com.dao.impl.CartItemDaoImpl;
 import org.example.e_com.model.CartItem;
 import org.example.e_com.service.CartItemService;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class CartItemServiceImpl implements CartItemService {
@@ -83,5 +84,15 @@ public class CartItemServiceImpl implements CartItemService {
         }
 
         return cartItemDao.delete(id) > 0;
+    }
+
+    @Override
+    public int deleteByCartId(int cartId, Connection conn) {
+
+        if (cartId <= 0 || conn == null) {
+            return 0;
+        }
+
+        return cartItemDao.deleteByCartId(cartId, conn);
     }
 }

@@ -2,6 +2,7 @@ package org.example.e_com.service;
 
 import org.example.e_com.model.Order;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface OrderService {
@@ -18,7 +19,7 @@ public interface OrderService {
 
     boolean deleteOrder(int id);
 
-
+    int createOrder(Order order, Connection conn);
 
 
 }

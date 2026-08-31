@@ -2,6 +2,7 @@ package org.example.e_com.dao;
 
 import org.example.e_com.model.Payment;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface PaymentDao {
@@ -17,6 +18,9 @@ public interface PaymentDao {
 
     // Thêm payment
     int insert(Payment payment);
+
+    // Thêm payment trong transaction
+    int insert(Payment payment, Connection conn);
 
     // Cập nhật payment
     int update(Payment payment);

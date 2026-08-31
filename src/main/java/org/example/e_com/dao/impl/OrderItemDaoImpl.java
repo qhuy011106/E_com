@@ -217,4 +217,27 @@ public class OrderItemDaoImpl implements OrderItemDao {
 
         return row;
     }
+
+    @Override
+    public int insert(OrderItem orderItem, Connection conn) {
+
+        String sql = """
+            INSERT INTO order_items
+            (order_id, product_id, quantity, price)
+            VALUES (?, ?, ?, ?)
+            """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, orderItem.getOrderId());
+            ps.setInt(2, orderItem.getProductId());
+            ps.setInt(3, orderItem.getQuantity());
+            ps.setBigDecimal(4, orderItem.getPrice());
+
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Loi khi tao OrderItem", e);
+        }
+    }
 }

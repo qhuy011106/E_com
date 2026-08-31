@@ -5,6 +5,8 @@ import org.example.e_com.dao.impl.ProductDaoImpl;
 import org.example.e_com.model.Product;
 import org.example.e_com.service.ProductService;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -25,13 +27,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean addProduct(Product product) {
-        if(product == null || product.getId() <= 0 || product.getName() == null || product.getName().trim().isEmpty() ||product.getPrice() < 0 || product.getQuantity() < 0 ) return false;
+        if(product == null || product.getId() <= 0 || product.getName() == null || product.getName().trim().isEmpty() ||product.getPrice().compareTo(BigDecimal.ZERO) < 0 || product.getQuantity() < 0 ) return false;
         return productDao.insert(product) > 0;
     }
 
     @Override
     public boolean updateProduct(Product product) {
-        if(product == null || product.getName() == null || product.getName().trim().isEmpty() ||product.getPrice() < 0 || product.getQuantity() < 0 ) return false;
+        if(product == null || product.getName() == null || product.getName().trim().isEmpty() ||product.getPrice().compareTo(BigDecimal.ZERO) < 0 || product.getQuantity() < 0 ) return false;
         return productDao.update(product) > 0;
     }
 
@@ -41,5 +43,26 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDao.findById(id);
         if(product == null) return false;
         return productDao.delete(id) > 0;
+    }
+
+    @Override
+    public int updateProduct(Product product, Connection conn) {
+
+        if (product == null || conn == null) {
+            return 0;
+        }
+
+        if (product.getId() <= 0
+                || product.getName() == null
+                || product.getName().trim().isEmpty()
+                || product.getPrice() == null
+                || product.getPrice().compareTo(BigDecimal.ZERO) < 0
+                || product.getQuantity() < 0
+                || product.getCategory_id() <= 0) {
+
+            return 0;
+        }
+
+        return productDao.update(product, conn);
     }
 }

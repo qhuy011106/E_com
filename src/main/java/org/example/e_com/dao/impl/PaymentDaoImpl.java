@@ -234,4 +234,33 @@ public class PaymentDaoImpl implements PaymentDao {
 
         return row;
     }
+
+    @Override
+    public int insert(Payment payment, Connection conn) {
+
+        String sql = """
+            INSERT INTO payments
+            (order_id, payment_method, payment_status, transaction_code, paid_at)
+            VALUES (?, ?, ?, ?, ?)
+            """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, payment.getOrderId());
+            ps.setString(2, payment.getPaymentMethod());
+            ps.setString(3, payment.getPaymentStatus());
+            ps.setString(4, payment.getTransactionCode());
+
+            if (payment.getPaidAt() != null) {
+                ps.setTimestamp(5, payment.getPaidAt());
+            } else {
+                ps.setNull(5, java.sql.Types.TIMESTAMP);
+            }
+
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Loi khi tao Payment trong transaction", e);
+        }
+    }
 }

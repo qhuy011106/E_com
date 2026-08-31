@@ -201,4 +201,20 @@ CartItemDaoImpl implements CartItemDao {
 
         return row;
     }
+
+    @Override
+    public int deleteByCartId(int cartId, Connection conn) {
+
+        String sql = "DELETE FROM cart_items WHERE cart_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, cartId);
+
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Loi khi xoa CartItem trong transaction", e);
+        }
+    }
 }

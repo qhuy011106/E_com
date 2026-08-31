@@ -2,25 +2,24 @@ package org.example.e_com.dao;
 
 import org.example.e_com.model.Order;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface OrderDao {
 
-    // Lấy tất cả đơn hàng
     List<Order> getAllOrder();
 
-    // Tìm đơn hàng theo ID
     Order findById(int id);
 
-    // Lấy tất cả đơn hàng của một user
     List<Order> findByUserId(int userId);
 
-    // Thêm đơn hàng
+    // Dùng cho các chức năng bình thường
     int insert(Order order);
 
-    // Cập nhật đơn hàng
+    // Dùng cho Checkout Transaction
+    int insert(Order order, Connection conn);
+
     int update(Order order);
 
-    // Xóa đơn hàng
     int delete(int id);
 }
