@@ -65,4 +65,10 @@ public class ProductServiceImpl implements ProductService {
 
         return productDao.update(product, conn);
     }
+
+    @Override
+    public List<Product> findByCategoryId(int categoryId) {
+        if (categoryId <= 0) return List.of();  // Trả về list rỗng
+        return productDao.findByCategoryId(categoryId);
+    }
 }

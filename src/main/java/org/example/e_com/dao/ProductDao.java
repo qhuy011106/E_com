@@ -12,4 +12,6 @@ public interface ProductDao {
     int update(Product product);
     int delete(int id);
     int update(Product product, Connection conn);
+
+    List<Product> findByCategoryId(int categoryId);
 }

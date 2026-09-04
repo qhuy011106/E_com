@@ -13,27 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
+
     @Override
     public List<Product> getAllProduct() {
         List<Product> p = new ArrayList<>();
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "select * from products";
+            String sql = "SELECT * FROM products";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                int id =  rs.getInt("id");
+            while (rs.next()) {
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
                 BigDecimal price = rs.getBigDecimal("price");
                 int quantity = rs.getInt("quantity");
                 int category_id = rs.getInt("category_id");
-                Product a = new Product(id,name,price,quantity,category_id);
+                Product a = new Product(id, name, price, quantity, category_id);
                 p.add(a);
             }
             rs.close();
             ps.close();
             conn.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return p;
@@ -41,14 +42,14 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product findById(int id) {
-        Product pro =   null;
+        Product pro = null;
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "select * from products where id = ?";
+            String sql = "SELECT * FROM products WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 pro = new Product(
                         rs.getInt("id"),
                         rs.getString("name"),
@@ -60,10 +61,41 @@ public class ProductDaoImpl implements ProductDao {
             rs.close();
             ps.close();
             conn.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return pro;
+    }
+
+    // ✅ SỬA: Thêm method findByCategoryId
+    @Override
+    public List<Product> findByCategoryId(int categoryId) {
+        List<Product> products = new ArrayList<>();
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sql = "SELECT * FROM products WHERE category_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBigDecimal("price"),
+                        rs.getInt("quantity"),
+                        rs.getInt("category_id")
+                );
+                products.add(product);
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
     @Override
@@ -71,20 +103,19 @@ public class ProductDaoImpl implements ProductDao {
         int row = 0;
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "insert into products(id,name,price,quantity,category_id) values (?,?,?,?,?)";
+            // ❌ SỬA: Không insert id (AUTO_INCREMENT)
+            String sql = "INSERT INTO products(name, price, quantity, category_id) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, product.getId());
-            ps.setString(2,product.getName());
-            ps.setBigDecimal(3,product.getPrice());
-            ps.setInt(4,product.getQuantity());
-            ps.setInt(5,product.getCategory_id());
+            ps.setString(1, product.getName());
+            ps.setBigDecimal(2, product.getPrice());
+            ps.setInt(3, product.getQuantity());
+            ps.setInt(4, product.getCategory_id());
             row = ps.executeUpdate();
             ps.close();
             conn.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return row;
     }
 
@@ -93,21 +124,19 @@ public class ProductDaoImpl implements ProductDao {
         int row = 0;
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "update products set name = ?, price = ?, quantity = ?, category_id = ? where id = ?";
+            String sql = "UPDATE products SET name = ?, price = ?, quantity = ?, category_id = ? WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, product.getName());
-            ps.setBigDecimal(2,product.getPrice());
+            ps.setBigDecimal(2, product.getPrice());
             ps.setInt(3, product.getQuantity());
-            ps.setInt(4,product.getCategory_id());
+            ps.setInt(4, product.getCategory_id());
             ps.setInt(5, product.getId());
             row = ps.executeUpdate();
             ps.close();
             conn.close();
-
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return row;
     }
 
@@ -116,14 +145,13 @@ public class ProductDaoImpl implements ProductDao {
         int row = 0;
         try {
             Connection conn = DBConnection.getConnection();
-            String sql = "delete from products where id = ?";
+            String sql = "DELETE FROM products WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             row = ps.executeUpdate();
             ps.close();
             conn.close();
-
-    }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return row;
@@ -131,7 +159,6 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public int update(Product product, Connection conn) {
-
         String sql = """
             UPDATE products
             SET name = ?,
@@ -142,7 +169,6 @@ public class ProductDaoImpl implements ProductDao {
             """;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setString(1, product.getName());
             ps.setBigDecimal(2, product.getPrice());
             ps.setInt(3, product.getQuantity());
@@ -150,7 +176,6 @@ public class ProductDaoImpl implements ProductDao {
             ps.setInt(5, product.getId());
 
             return ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException("Loi khi cap nhat Product trong transaction", e);
         }

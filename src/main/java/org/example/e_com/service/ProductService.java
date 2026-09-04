@@ -17,4 +17,5 @@ public interface ProductService {
 
     boolean deleteProduct(int id);
     int updateProduct(Product product, Connection conn);
+    List<Product> findByCategoryId(int categoryId);
 }
