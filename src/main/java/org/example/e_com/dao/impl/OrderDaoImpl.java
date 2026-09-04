@@ -2,8 +2,10 @@ package org.example.e_com.dao.impl;
 
 import org.example.e_com.dao.OrderDao;
 import org.example.e_com.model.Order;
+import org.example.e_com.model.Review;
 import org.example.e_com.util.DBConnection;
 
+import javax.print.DocFlavor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -237,5 +239,34 @@ public class OrderDaoImpl implements OrderDao {
         }
 
         return row;
+    }
+
+    @Override
+    public List<Order> findOrderWithItemByUserId(int userId) {
+        List<Order> orders = new ArrayList<>();
+        try{
+            Connection conn = DBConnection.getConnection();
+            String sql = "select * from orders where user_id = ? order by created_at DESC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,userId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Order order = new Order(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getBigDecimal("total_amount"),
+                        rs.getString("status"),
+                        rs.getTimestamp("created_at")
+                );
+                orders.add(order);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return orders;
     }
 }

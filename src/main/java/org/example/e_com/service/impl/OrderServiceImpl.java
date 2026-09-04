@@ -96,4 +96,10 @@ public class OrderServiceImpl implements OrderService {
 
         return orderDao.insert(order, conn);
     }
+
+    @Override
+    public List<Order> findOrderWithItemByUserId(int userId) {
+        if(userId <= 0) return List.of();
+        return orderDao.findOrderWithItemByUserId(userId);
+    }
 }

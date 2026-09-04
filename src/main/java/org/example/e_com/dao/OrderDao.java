@@ -22,4 +22,6 @@ public interface OrderDao {
     int update(Order order);
 
     int delete(int id);
+    //xem lich su don hang cua user
+    List<Order> findOrderWithItemByUserId(int userId);
 }

@@ -20,6 +20,7 @@ public interface OrderService {
     boolean deleteOrder(int id);
 
     int createOrder(Order order, Connection conn);
+    List<Order> findOrderWithItemByUserId(int userId);
 
 
 }
