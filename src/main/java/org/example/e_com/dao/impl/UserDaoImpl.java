@@ -127,19 +127,19 @@ public class UserDaoImpl implements UserDao {
 
             String sql = """
                     INSERT INTO users
-                    (id, username, password, full_name, email, phone, role)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    (username, password, full_name, email, phone, role)
+                    VALUES ( ?, ?, ?, ?, ?, ?)
                     """;
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getUsername());
-            ps.setString(3, user.getPassword());
-            ps.setString(4, user.getFullname());
-            ps.setString(5, user.getEmail());
-            ps.setString(6, user.getPhone());
-            ps.setString(7, user.getRole());
+
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFullname());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getRole());
 
             row = ps.executeUpdate();
 

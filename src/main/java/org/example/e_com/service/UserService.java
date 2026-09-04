@@ -10,4 +10,5 @@ public interface UserService {
     boolean addUser(User user);
     boolean updateUser(User user);
     boolean deleteUser(int id);
+    User login(String username, String password);
 }
