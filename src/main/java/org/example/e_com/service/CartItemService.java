@@ -14,4 +14,6 @@ public interface CartItemService {
     boolean updateCartItem(CartItem cartitem);
     boolean deleteCartItem(int id);
     int deleteByCartId(int cartId, Connection conn);
+    CartItem findByCartIdAndProductId(int cartId, int productId);
+    boolean clearCart(int cartId);
 }

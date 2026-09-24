@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         //tim user theo username
-        User user = userdao.findByUsername(username);
+        User user = userdao.findByUsername(username.trim());
         if(user == null){
 
             return null;
